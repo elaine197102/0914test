@@ -15,6 +15,7 @@
 
   function bindEvents() {
     $('#search-form').addEventListener('submit', (event) => { event.preventDefault(); search(); });
+    $('#document-search-form').addEventListener('submit', (event) => { event.preventDefault(); searchDocuments(); });
     $('#clear-button').addEventListener('click', clearSearch);
     $('#compare-button').addEventListener('click', renderComparison);
     document.querySelectorAll('.nav-link').forEach((button) => button.addEventListener('click', () => switchView(button.dataset.view)));
@@ -24,6 +25,25 @@
       if (event.target.matches('[data-close-modal]')) closeModal();
     });
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeModal(); });
+  }
+
+  async function searchDocuments() {
+    const query = $('#document-keyword-input').value.trim();
+    const error = $('#document-search-error');
+    const container = $('#document-results');
+    error.textContent = '';
+    if (query.length < 2) { error.textContent = '請輸入至少 2 個字元'; return; }
+    container.innerHTML = '<div class="empty-state"><h3>查詢中…</h3></div>';
+    try {
+      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || '查詢失敗');
+      if (!payload.results.length) { container.innerHTML = '<div class="empty-state"><h3>沒有找到符合內容</h3><p>請換一組關鍵字再試一次。</p></div>'; return; }
+      container.innerHTML = payload.results.map((item) => `<article class="result-card"><div class="card-top"><span class="card-code">第 ${item.chunk} 段</span><span class="status-badge published">${item.score} 次命中</span></div><h3>${item.document}</h3><p class="definition-summary">${item.snippet}</p></article>`).join('');
+    } catch (requestError) {
+      container.innerHTML = '';
+      error.textContent = requestError.message || '查詢失敗';
+    }
   }
 
   function search() {

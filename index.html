@@ -19,6 +19,7 @@
         <nav class="top-nav" aria-label="主要導覽">
           <button class="nav-link active" data-view="search-view">指標查詢</button>
           <button class="nav-link" data-view="compare-view">跨省比較</button>
+          <button class="nav-link" data-view="document-view">文件查詢</button>
           <button class="nav-link" data-view="admin-view">內容管理</button>
         </nav>
       </div>
@@ -60,6 +61,20 @@
         <div class="panel"><div class="section-heading"><div><p class="eyebrow">COMPARE</p><h2>跨省定義比較</h2></div><span class="muted">選擇同一指標進行比較</span></div>
           <div class="compare-controls"><label class="field">指標<select id="compare-indicator"><option value="">請先選擇指標</option></select></label><button id="compare-button" class="primary-button">開始比較</button></div>
           <div id="compare-result" class="compare-result"><div class="empty-state compact"><div class="empty-icon">⇄</div><h3>尚未選擇比較項目</h3><p>選擇指標後，系統會列出有已發布定義的省分。</p></div></div>
+        </div>
+      </section>
+
+      <section class="app-view" id="document-view">
+        <div class="panel">
+          <div class="section-heading"><div><p class="eyebrow">DOCUMENT SEARCH</p><h2>評審文件查詢</h2></div><span class="muted">資料存放於私有 Vercel Blob</span></div>
+          <form id="document-search-form" class="search-grid">
+            <label class="field field-province">查詢文字 <span class="required">*</span>
+              <input id="document-keyword-input" type="search" placeholder="例如：床位規模、依法執業" required />
+            </label>
+            <button class="primary-button search-button" type="submit">搜尋文件</button>
+          </form>
+          <p id="document-search-error" class="error-text" role="alert"></p>
+          <div id="document-results" class="results-grid"></div>
         </div>
       </section>
 
