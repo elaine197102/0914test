@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>質量指標操作定義查詢系統</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <div class="brand">
+          <div class="brand-mark">Q</div>
+          <div>
+            <div class="brand-title">質量指標操作定義</div>
+            <div class="brand-subtitle">Provincial Quality Metric Reference</div>
+          </div>
+        </div>
+        <nav class="top-nav" aria-label="主要導覽">
+          <button class="nav-link active" data-view="search-view">指標查詢</button>
+          <button class="nav-link" data-view="compare-view">跨省比較</button>
+          <button class="nav-link" data-view="admin-view">內容管理</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">QUALITY METRIC REFERENCE</p>
+          <h1>先選省分，再查詢正確的操作定義</h1>
+          <p class="hero-copy">同一質量指標可能因省分而有不同的計算方式與適用條件。本系統會將每一筆定義與省分、版本及參考依據清楚連結。</p>
+        </div>
+        <div class="hero-stat"><strong id="published-count">0</strong><span>已發布指標定義</span></div>
+      </section>
+
+      <section class="app-view active" id="search-view">
+        <div class="panel search-panel">
+          <div class="section-heading"><div><p class="eyebrow">SEARCH</p><h2>查詢指標</h2></div><span class="required-note">* 必填</span></div>
+          <form id="search-form" class="search-grid">
+            <label class="field field-province">省分 <span class="required">*</span>
+              <select id="province-select" required><option value="">請選擇省分</option></select>
+            </label>
+            <label class="field">關鍵字
+              <input id="keyword-input" type="search" placeholder="指標名稱、代碼或定義內容" />
+            </label>
+            <label class="field">指標分類
+              <select id="category-select"><option value="">全部分類</option></select>
+            </label>
+            <button class="primary-button search-button" type="submit">執行查詢 <span>→</span></button>
+          </form>
+          <p id="search-error" class="error-text" role="alert"></p>
+        </div>
+
+        <div class="results-toolbar"><div><span id="current-filter">尚未查詢</span><span id="result-count" class="muted"></span></div><button id="clear-button" class="text-button">清除條件</button></div>
+        <div id="results" class="results-grid"><div class="empty-state"><div class="empty-icon">⌕</div><h3>請先選擇省分</h3><p>選擇省分後，系統只會顯示該省分已發布且仍有效的指標定義。</p></div></div>
+      </section>
+
+      <section class="app-view" id="compare-view">
+        <div class="panel"><div class="section-heading"><div><p class="eyebrow">COMPARE</p><h2>跨省定義比較</h2></div><span class="muted">選擇同一指標進行比較</span></div>
+          <div class="compare-controls"><label class="field">指標<select id="compare-indicator"><option value="">請先選擇指標</option></select></label><button id="compare-button" class="primary-button">開始比較</button></div>
+          <div id="compare-result" class="compare-result"><div class="empty-state compact"><div class="empty-icon">⇄</div><h3>尚未選擇比較項目</h3><p>選擇指標後，系統會列出有已發布定義的省分。</p></div></div>
+        </div>
+      </section>
+
+      <section class="app-view" id="admin-view">
+        <div class="panel"><div class="section-heading"><div><p class="eyebrow">CONTENT MANAGEMENT</p><h2>內容管理</h2></div><span class="status-badge draft">MVP 示範</span></div>
+          <p class="admin-intro">以下列出目前資料狀態。正式版本可將此區接至後台 API，完成草稿、審核、發布及失效流程。</p>
+          <div id="admin-table" class="admin-table"></div>
+        </div>
+      </section>
+    </main>
+
+    <div id="detail-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="detail-title">
+      <div class="modal-backdrop" data-close-modal></div><div class="modal-card"><button class="modal-close" data-close-modal aria-label="關閉">×</button><div id="detail-content"></div></div>
+    </div>
+    <script src="data.js"></script><script src="app.js"></script>
+  </body>
+</html>
