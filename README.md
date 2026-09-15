@@ -21,4 +21,4 @@ python -m http.server 8000
 
 ## 目前限制
 
-目前為前端 MVP，資料位於 `data.js`，尚未接上真正資料庫、登入驗證及後端 API。後續可依 `SPEC.md` 第 9 節建立 `/api/v1`，並將 `app.js` 的 `QMI_DATA` 替換為 API 查詢。
+目前前端的指標查詢已改接 Vercel Serverless API 與 Neon Postgres。原始 DOC／PDF 與 OCR 內容存放於私有 Vercel Blob，不會放入本 repo；匯入資料會保留來源文件、頁碼及 `needs_review` 校對狀態。網站使用 Vercel Authentication 保護，只有授權團隊成員可查詢。
