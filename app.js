@@ -39,7 +39,8 @@
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || '查詢失敗');
       if (!payload.results.length) { container.innerHTML = '<div class="empty-state"><h3>沒有找到符合內容</h3><p>請換一組關鍵字再試一次。</p></div>'; return; }
-      container.innerHTML = payload.results.map((item) => `<article class="result-card"><div class="card-top"><span class="card-code">第 ${item.chunk} 段</span><span class="status-badge published">${item.score} 次命中</span></div><h3>${item.document}</h3><p class="definition-summary">${item.snippet}</p></article>`).join('');
+      const escapeHtml = (value) => String(value).replace(/[&<>\"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[character]));
+      container.innerHTML = payload.results.map((item) => `<article class="result-card"><div class="card-top"><span class="card-code">第 ${item.chunk} 段</span><span class="status-badge published">${item.score} 次命中</span></div><h3>${escapeHtml(item.document)}</h3><p class="definition-summary">${escapeHtml(item.snippet)}</p><details><summary>查看完整段落</summary><p class="definition-summary">${escapeHtml(item.content)}</p></details></article>`).join('');
     } catch (requestError) {
       container.innerHTML = '';
       error.textContent = requestError.message || '查詢失敗';

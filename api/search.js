@@ -42,7 +42,7 @@ module.exports = async function handler(request, response) {
       .filter((chunk) => chunk.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 20)
-      .map((chunk) => ({ document: chunk.document, chunk: chunk.chunk, score: chunk.score, snippet: snippet(chunk.text, query) }));
+      .map((chunk) => ({ document: chunk.document, chunk: chunk.chunk, score: chunk.score, snippet: snippet(chunk.text, query), content: chunk.text }));
     response.setHeader("Cache-Control", "private, max-age=60");
     return response.status(200).json({ query, total: results.length, results });
   } catch (error) {
